@@ -117,51 +117,51 @@ app.use(bodyParser.urlencoded({
 
       //Using arrow function with add post data, check specific data Like 1)name  2)description not add extra like 3)hobby allowed and check isset.If not then return and set error
         var notes = [{'name':'Sanjay','description':'This is the sample'}];
-      //Add array value API
-        app.post('/add_note', (req, res)=>{
-          console.log("Body", req.body); //If console print message "Body undefined" then BodyParser used as a middlewere
-          //output body : Body { name: 'Viraj', description: 'This is sample 1', test: '2345' }
+	      //Add array value API
+	        app.post('/add_note', (req, res)=>{
+	          console.log("Body", req.body); //If console print message "Body undefined" then BodyParser used as a middlewere
+	          //output body : Body { name: 'Viraj', description: 'This is sample 1', test: '2345' }
 
-          var params = _.pick(req.body, ['name','description']);  //_.pick() is lodash method to get parameter
+	          var params = _.pick(req.body, ['name','description']);  //_.pick() is lodash method to get parameter
 
-          console.log("PARAMS",params);  //display response in terminal of post data
-          //output params : PARAMS { name: 'Viraj', description: 'This is sample 1' } //not allowed third parameter test:2345
+	          console.log("PARAMS",params);  //display response in terminal of post data
+	          //output params : PARAMS { name: 'Viraj', description: 'This is sample 1' } //not allowed third parameter test:2345
 
-          if(_.isEmpty(params.name) || _.isEmpty(params.description)){ //If missing anyone then error return
-            return res.send({'status':0,'message':'Required parameter missing','data':null});  //If you have not return then display error "Error: Can't set headers after they are sent."
-          }
-          notes.push(params);
-          res.send({'status':1,'message':'Note added successfully','data':notes});
-        });
+	          if(_.isEmpty(params.name) || _.isEmpty(params.description)){ //If missing anyone then error return
+	            return res.send({'status':0,'message':'Required parameter missing','data':null});  //If you have not return then display error "Error: Can't set headers after they are sent."
+	          }
+	          notes.push(params);
+	          res.send({'status':1,'message':'Note added successfully','data':notes});
+	        });
 
-      //List array value API
-        app.post('/list_note', (req, res)=>{
-          res.send({'status':1,'message':'Note List successfully','data':notes});
-        });
+	      //List array value API
+	        app.post('/list_note', (req, res)=>{
+	          res.send({'status':1,'message':'Note List successfully','data':notes});
+	        });
 
 
-      //Delete array value API
-        app.post('/delete_note', (req, res)=>{
-          //notes.pop();
-          notes.splice(1,1);
-          res.send({'status':1,'message':'Note Deleted successfully','data':notes});
-        });
+	      //Delete array value API
+	        app.post('/delete_note', (req, res)=>{
+	          //notes.pop();
+	          notes.splice(1,1);
+	          res.send({'status':1,'message':'Note Deleted successfully','data':notes});
+	        });
 
-      //Update array value API
-        app.post('/update_note', (req, res)=>{
-          var params = _.pick(req.body, ['name','description']);  //_.pick() is lodash method to get parameter
-          if(_.isEmpty(params.name)){ //If missing anyone then error return
-            return res.send({'status':0,'message':'Required parameter missing','data':null});  //If you have not return then display error "Error: Can't set headers after they are sent."
-          }
-          for (var i in notes) {
-             //if (notes[i].name == req.body.name) {  //Use default for get params req.body.name
-             if (notes[i].name == params.name) {      //Use lodash for get parameter params.name
-                 notes[i].description = params.description;
-                break; //Stop this loop, we found it!
-             }
-           }
-          return res.send({'status':1,'message':'Note Updated successfully','data':notes});
-        });
+	      //Update array value API
+	        app.post('/update_note', (req, res)=>{
+	          var params = _.pick(req.body, ['name','description']);  //_.pick() is lodash method to get parameter
+	          if(_.isEmpty(params.name)){ //If missing anyone then error return
+	            return res.send({'status':0,'message':'Required parameter missing','data':null});  //If you have not return then display error "Error: Can't set headers after they are sent."
+	          }
+	          for (var i in notes) {
+	             //if (notes[i].name == req.body.name) {  //Use default for get params req.body.name
+	             if (notes[i].name == params.name) {      //Use lodash for get parameter params.name
+	                 notes[i].description = params.description;
+	                break; //Stop this loop, we found it!
+	             }
+	           }
+	          return res.send({'status':1,'message':'Note Updated successfully','data':notes});
+	        });
 
 //Start server
 server.listen(3000, function(){
